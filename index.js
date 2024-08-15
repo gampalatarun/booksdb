@@ -37,6 +37,29 @@ app.get('/books/', async (request, response) => {
   response.send(booksArray)
 })
 
+// Get Books API
+app.get('/books/', async (request, response) => {
+  const {offset, limit, search_q, order_by, order} = request.query
+  const getBooksQuery1 = `SELECT
+      *
+    FROM
+      book
+   WHERE title LIKE '%${search_q}%' ORDER BY ${order_by} ${order} LIMIT ${limit} OFFSET ${offset};`
+  const booksArray = await db.all(getBooksQuery1)
+  response.send(booksArray)
+})
+//by giving the default value to the query parameter like search_q =""
+app.get('/books/', async (request, response) => {
+  const {offset, limit, search_q = '', order_by, order} = request.query
+  const getBooksQuery2 = `SELECT
+      *
+    FROM
+      book
+   WHERE title LIKE '%${search_q}%' ORDER BY ${order_by} ${order} LIMIT ${limit} OFFSET ${offset};`
+  const booksArray = await db.all(getBooksQuery2)
+  response.send(booksArray)
+})
+
 //Get Book API
 app.get('/books/:bookId/', async (request, response) => {
   const {bookId} = request.params
