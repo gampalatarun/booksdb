@@ -14,3 +14,6 @@ const getBooksQuery = `
 
     
 ---------------------------------
+
+IF THERE are more quert parameters are there don't pass it in get method use POST 
+method at that time 
