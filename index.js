@@ -26,7 +26,7 @@ const initializeDBAndServer = async () => {
 initializeDBAndServer()
 
 // Get Books API
-app.get('/books/', async (request, response) => {
+/*app.get('/books/', async (request, response) => {
   const getBooksQuery = `SELECT
       *
     FROM
@@ -35,29 +35,47 @@ app.get('/books/', async (request, response) => {
       book_id;`
   const booksArray = await db.all(getBooksQuery)
   response.send(booksArray)
-})
+})*/
 
 // Get Books API
-app.get('/books/', async (request, response) => {
+/*app.get('/books/', async (request, response) => {
   const {offset, limit, search_q, order_by, order} = request.query
   const getBooksQuery1 = `SELECT
       *
     FROM
       book
    WHERE title LIKE '%${search_q}%' ORDER BY ${order_by} ${order} LIMIT ${limit} OFFSET ${offset};`
-  const booksArray = await db.all(getBooksQuery1)
-  response.send(booksArray)
-})
+  const booksArray1 = await db.all(getBooksQuery1)
+  response.send(booksArray1)
+})*/
 //by giving the default value to the query parameter like search_q =""
-app.get('/books/', async (request, response) => {
+/*app.get('/books/', async (request, response) => {
   const {offset, limit, search_q = '', order_by, order} = request.query
   const getBooksQuery2 = `SELECT
       *
     FROM
       book
    WHERE title LIKE '%${search_q}%' ORDER BY ${order_by} ${order} LIMIT ${limit} OFFSET ${offset};`
-  const booksArray = await db.all(getBooksQuery2)
-  response.send(booksArray)
+  const booksArray2 = await db.all(getBooksQuery2)
+  response.send(booksArray2)
+})*/
+
+//DEFAULT VALUES ARE GIVEN TO ALL THE QUERY PARAMETERS BODY
+app.get('/books/', async (request, response) => {
+  const {
+    offset = 3,
+    limit = 7,
+    search_q = '',
+    order_by = 'book_id',
+    order = 'ASC',
+  } = request.query
+  const getBooksQuery3 = `SELECT
+      *
+    FROM
+      book
+   WHERE title LIKE '%${search_q}%' ORDER BY ${order_by} ${order} LIMIT ${limit} OFFSET ${offset};`
+  const booksArray3 = await db.all(getBooksQuery3)
+  response.send(booksArray3)
 })
 
 //Get Book API
